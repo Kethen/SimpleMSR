@@ -15,11 +15,36 @@
  * For undervolting, consult
  * https://github.com/mihic/linux-intel-undervolt
  */
-static const uint32_t msr_index[] = {
-    0x1FC // Disable BD PROCHOT
+
+struct msr_pair {
+    const char *name;
+    uint32_t index;
+    uint64_t value;
 };
-static const uint64_t msr_value[] = {
-    0
+
+static const struct msr_pair msr_pairs[] = {
+    {
+        .name = "MSR_POWER_CTL",
+        .index = 0x1FC,
+        .value = 0
+    },
+    #if 0
+    {
+        .name = "MSR_PKG_POWER_LIMIT (P1 9 P2 15 and other parameters)",
+        .index = 0x610,
+        .value = 0x42807800dd8048
+    },
+    {
+        .name = "CPU -40 mwat mbox",
+        .index = 0x150,
+        .value = 0x80000011fb000000
+    },
+    {
+        .name = "GPU -40 mwat mbox",
+        .index = 0x150,
+        .value = 0x80000111fb000000
+    },
+    #endif
 };
 
 class SimpleMSR : public IOService
